@@ -16,6 +16,8 @@ fi
 7z x -y $thispath/v28apex.7z -o$systempath/apex/ 2>/dev/null >> $systempath/zip.log
 7z x -y $thispath/v29apex.7z -o$systempath/apex/ 2>/dev/null >> $systempath/zip.log
 7z x -y $thispath/v30apex.7z -o$systempath/apex/ 2>/dev/null >> $systempath/zip.log
+7z x -y $thispath/v32apex.7z -o$systempath/apex/ 2>/dev/null >> $systempath/zip.log
+7z x -y $thispath/v33apex.7z -o$systempath/apex/ 2>/dev/null >> $systempath/zip.log
 rm -rf $systempath/zip.log
 cd $bin/apex_tools
 ./apex_extractor.sh "$TARGETDIR" "$systempath/apex" > /dev/null 2>&1
@@ -73,6 +75,16 @@ rm -rf $systemdir/lib64/vndk-28 $systemdir/lib64/vndk-sp-28
 rm -rf $systemdir/lib64/vndk-30 $systemdir/lib64/vndk-sp-30
 rm -rf $systemdir/lib/vndk-31 $systemdir/lib/vndk-sp-31
 rm -rf $systemdir/lib64/vndk-31 $systemdir/lib64/vndk-sp-31
+rm -rf $systemdir/lib/vndk-31 $systemdir/lib/vndk-sp-31
+rm -rf $systemdir/lib64/vndk-31 $systemdir/lib64/vndk-sp-31
+rm -rf $systemdir/lib/vndk-32 $systemdir/lib/vndk-sp-32
+rm -rf $systemdir/lib64/vndk-32 $systemdir/lib64/vndk-sp-32
+rm -rf $systemdir/lib/vndk-32 $systemdir/lib/vndk-sp-32
+rm -rf $systemdir/lib64/vndk-32 $systemdir/lib64/vndk-sp-32
+rm -rf $systemdir/lib/vndk-33 $systemdir/lib/vndk-sp-33
+rm -rf $systemdir/lib64/vndk-33 $systemdir/lib64/vndk-sp-33
+rm -rf $systemdir/lib/vndk-33 $systemdir/lib/vndk-sp-33
+rm -rf $systemdir/lib64/vndk-33 $systemdir/lib64/vndk-sp-33
 
 ln -s  /apex/com.android.vndk.v29/lib $systemdir/lib/vndk-29
 ln -s  /apex/com.android.vndk.v28/lib $systemdir/lib/vndk-28
@@ -82,6 +94,10 @@ ln -s  /apex/com.android.vndk.v28/lib $systemdir/lib/vndk-sp-28
 ln -s  /apex/com.android.vndk.v30/lib $systemdir/lib/vndk-sp-30
 ln -s  /apex/com.android.vndk.v31/lib $systemdir/lib/vndk-31
 ln -s  /apex/com.android.vndk.v31/lib $systemdir/lib/vndk-sp-31
+ln -s  /apex/com.android.vndk.v21/lib $systemdir/lib/vndk-32
+ln -s  /apex/com.android.vndk.v32/lib $systemdir/lib/vndk-sp-32
+ln -s  /apex/com.android.vndk.v33/lib $systemdir/lib/vndk-33
+ln -s  /apex/com.android.vndk.v33/lib $systemdir/lib/vndk-sp-33
 
 ln -s  /apex/com.android.vndk.v29/lib64 $systemdir/lib64/vndk-29
 ln -s  /apex/com.android.vndk.v28/lib64 $systemdir/lib64/vndk-28
@@ -91,3 +107,7 @@ ln -s  /apex/com.android.vndk.v28/lib64 $systemdir/lib64/vndk-sp-28
 ln -s  /apex/com.android.vndk.v30/lib64 $systemdir/lib64/vndk-sp-30
 ln -s  /apex/com.android.vndk.v31/lib64 $systemdir/lib64/vndk-31
 ln -s  /apex/com.android.vndk.v31/lib64 $systemdir/lib64/vndk-sp-31
+ln -s  /apex/com.android.vndk.v32/lib64 $systemdir/lib64/vndk-32
+ln -s  /apex/com.android.vndk.v32/lib64 $systemdir/lib64/vndk-sp-32
+ln -s  /apex/com.android.vndk.v33/lib64 $systemdir/lib64/vndk-33
+ln -s  /apex/com.android.vndk.v33/lib64 $systemdir/lib64/vndk-sp-33
