@@ -210,3 +210,110 @@ if [ "$1" == "persist.sys.phh.disable_soundvolume_effect" ];then
     restartAudio
     exit
 fi
+
+#autorun
+if [ "$1" == "persist.sys.phh.autorun" ]; then
+    if [[ "$prop_value" != "true" && "$prop_value" != "false" ]]; then
+        exit 1
+    fi
+
+    if [ ! -f /data/adb/phh/run ]; then
+        mkdir -p /data/adb/phh
+        touch /data/adb/phh/run
+    fi
+    /system/bin/sh /data/adb/phh/run
+    exit
+fi
+
+#nolog
+if [ "$1" == "persist.sys.phh.nolog" ]; then
+    if [[ "$prop_value" != "false" && "$prop_value" != "true" ]]; then
+        exit 1
+    fi
+
+    if [[ "$prop_value" == "true" ]]; then
+        setprop ctl.stop logd
+        setprop ctl.stop traced
+        setprop ctl.stop traced_probes
+    else
+        setprop ctl.start traced_probes
+        setprop ctl.start traced
+        setprop ctl.start logd
+    fi
+    exit
+fi
+
+#restart_sysui
+if [ "$1" == "sys.phh.restart_sysui" ]; then
+    if [[ "$prop_value" = "false" && "$prop_value" != "true" ]]; then
+        exit
+    fi
+
+    if [[ "$prop_value" == "true" ]]; then
+        pkill systemui
+    fi
+    exit
+fi
+
+#dump_logs
+if [ "$1" == "sys.phh.dump_logs" ]; then
+    if [[ "$prop_value" = "false" && "$prop_value" != "true" ]]; then
+        exit
+    fi
+
+    if [[ "$prop_value" == "true" ]]; then
+        logcat -b all -d > /sdcard/logs.txt
+    fi
+    exit
+fi
+
+
+
+#monosim
+if [ "$1" == "persist.sys.phh.monosim" ]; then
+    if [[ "$prop_value" != "false" && "$prop_value" != "true" ]]; then
+        exit 1
+    fi
+
+    if [ "$prop_value" == "true" ]; then
+		resetprop_phh persist.radio.multisim.config single
+		resetprop_phh persist.dsds.enabled false
+		resetprop_phh persist.radio.modem.cap 09995
+
+		resetprop_phh ro.config.modem_number 1
+		resetprop_phh ro.config.client_number 1
+
+		resetprop_phh ro.multi.rild false
+		resetprop_phh persist.odm.dsds.enabled false
+		resetprop_phh ro.odm.multi.rild false
+
+	else
+		resetprop_phh persist.radio.multisim.config dsds
+		resetprop_phh persist.dsds.enabled true
+		resetprop_phh persist.radio.modem.cap 09A9D
+
+		resetprop_phh ro.multi.rild true
+		resetprop_phh persist.odm.dsds.enabled true
+		resetprop_phh ro.odm.multi.rild true
+    fi
+    exit
+fi
+
+# disable audio_hal
+if [ "$1" == "persist.bluetooth.system_audio_hal.enabled" ]; then
+    if [[ "$prop_value" != "0" && "$prop_value" != "1" ]]; then
+        exit 1
+    fi
+
+    if [[ "$prop_value" == 1 ]]; then
+        setprop persist.bluetooth.bluetooth_audio_hal.disabled false
+        setprop persist.bluetooth.a2dp_offload.disabled true
+        resetprop_phh ro.bluetooth.a2dp_offload.supported false
+    else
+        resetprop_phh --delete persist.bluetooth.bluetooth_audio_hal.disabled
+        resetprop_phh --delete persist.bluetooth.a2dp_offload.disabled
+        resetprop_phh --delete ro.bluetooth.a2dp_offload.supported
+    fi
+    restartAudio
+    exit
+fi
